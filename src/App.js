@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, useHistory } from "react-router-dom";
 import './App.css';
+import Home from "./Home";
+// import NotFound from "./NotFound"
+import Header from "./Header";
+import AddPostForm from "./AddPostForm";
+import PostDetails from "./PostDetails"
+import { Route, Switch } from "react-router-dom";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  /** Add a madlib story. */
+  const addPost = postObj => {
+    setPosts(posts => [...posts, postObj]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Header />
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <Home posts={posts} />
+            </Route>
+            <Route exact path="/new">
+              <AddPostForm addPost={addPost} />
+            </Route>
+            <Route exact path="/:id">
+              <PostDetails posts={posts} setPosts={setPosts} />
+            </Route>
+          </Switch>
+        </main>
+      </BrowserRouter>
     </div>
   );
 }
