@@ -4,32 +4,39 @@ import {
   DELETE_POST,
   ADD_COMMENT,
   DELETE_COMMENT,
-} from "./actionTypes";
+  FETCH_POST
+} from "../actionTypes";
 
-const INITIAL_STATE = {};
+//TIPS FROM ELIE: here is the shape of what my state looks like and dealing with what's inside and why
+//IMMER (libraray) => temporary copy of state and modifying using push and pop GOOD FURTHER STUDY
 
-/*
- */
-function rootReducer(state = INITIAL_STATE, action) {
-  console.log("state is", state);
+function postsReducer(state = {}, action) {
   const payload = action.payload;
   let stateCopy = { ...state };
   let post;
 
   switch (action.type) {
+
+    case FETCH_POST:
+      return { ...state, ...action.posts};
+
+    case 'ERROR':
+      return { ...state, error: true };
+
     case ADD_POST:
       return {
         ...state,
         [payload.id]: { ...payload, comments: {} },
       };
+
     case EDIT_POST:
-      console.log("payload is", payload);
-      console.log("payload post comments", payload.comments);
       stateCopy[payload.id] = payload;
       return stateCopy;
+
     case DELETE_POST:
       delete stateCopy[payload.id];
       return stateCopy;
+
     case ADD_COMMENT:
       post = state[payload.postId];
       return {
@@ -42,19 +49,27 @@ function rootReducer(state = INITIAL_STATE, action) {
           },
         },
       };
+
     case DELETE_COMMENT:
-      post = stateCopy[payload.postId];
-      console.log("post", post);
-      console.log("payload", payload);
-      console.log(
-        "what we're trying to delete",
-        post.comments[payload.commentId]
-      );
-      delete post.comments[payload.commentId];
-      return stateCopy;
+      post = state[payload.postId];
+
+      let copyState = {
+        ...state,
+        [payload.postId]: {
+          ...post,
+          comments: {
+            ...post.comments
+          },
+        },
+      };
+
+      delete copyState[payload.postId].comments[payload.commentId]
+
+      return copyState
+
     default:
       return state;
   }
 }
 
-export default rootReducer;
+export default postsReducer;

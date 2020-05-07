@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, useHistory } from "react-router-dom";
+import React, {useEffect} from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
-// import NotFound from "./NotFound"
 import Header from "./Header";
 import AddPostForm from "./AddPostForm";
-import PostDetails from "./PostDetails";
+import Post from "./Post";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { addPost, editPost, deletePost } from "./actions";
+import { addPost, editPost, deletePost, getPostsFromAPI } from "./actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 function App() {
-  const posts = useSelector((st) => st, shallowEqual);
-  console.log("RERENDER AT APP LEVEL");
-  console.log("POSTS IS", posts);
+  const posts = useSelector((st) => st.posts, shallowEqual);
   const dispatch = useDispatch();
 
-  /** Add a madlib story. */
-  // const addPost = (postObj) => {
-  //   setPosts((posts) => [...posts, postObj]);
-  // };
+
+  useEffect(() => {
+    dispatch(getPostsFromAPI());
+  }, [dispatch]);
 
   const addBlogPost = (post) => {
     dispatch(addPost(post));
@@ -43,13 +40,13 @@ function App() {
               <Home posts={posts} />
             </Route>
             <Route exact path="/new">
-              <AddPostForm addPost={addBlogPost} />
+              <AddPostForm addBlogPost={addBlogPost} />
             </Route>
             <Route exact path="/:id">
-              <PostDetails
+              <Post
                 posts={posts}
-                editPost={editBlogPost}
-                deletePost={deleteBlogPost}
+                editBlogPost={editBlogPost}
+                deleteBlogPost={deleteBlogPost}
               />
             </Route>
           </Switch>

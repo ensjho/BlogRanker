@@ -1,0 +1,10 @@
+.postcardHome {
+  border: solid;
+  margin-bottom: 20px;
+  width: 40%;
+  border-color: brown;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  color: black
+}

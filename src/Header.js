@@ -1,15 +1,21 @@
 import React from "react";
 import "./Header.css"
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Header(){
+function Header() {
   return (
     <div className="headerContainer">
       <h1>Microblog</h1>
       <h3>Get in the Rithm of blogging yo!</h3>
       <div>
-        <Link className="blogLink" to="/"> Blog </Link>
-        <Link className="addPostLink" to="/new"> Add a new post </Link>
+        <NavLink className="navBar blogLink"  
+                 to="/">
+                    Blog 
+        </NavLink>
+        <NavLink className="navBar addPostLink" 
+                 to="/new"> 
+                 Add a new post 
+        </NavLink>
       </div>
     </div>
   )

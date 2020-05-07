@@ -1,16 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import PostCardHome from "./PostCardHome";
+import BlogPostCard from "./BlogPostCard";
 
+//Renders Home Page with post cards (have title and description displayed)
 function Home({ posts }) {
+
+  console.log(posts);
+  
   const postComponent = Object.keys(posts).map((id) => (
-    <PostCardHome
+    <BlogPostCard
       key={id}
       id={id}
       title={posts[id].title}
       description={posts[id].description}
     />
   ));
+  // // console.log(posts)
+  //   const postComponent = posts.map((post) => (
+  //   <BlogPostCard
+  //     key={post.id}
+  //     id={post.id}
+  //     title={post.title}
+  //     description={post.description}
+  //   />
+  // ));
+
+
 
   return (
     <div className="homeContainer">
@@ -18,7 +32,11 @@ function Home({ posts }) {
         Welcome to <b>Microblog</b>, our innovative site for communicating on
         the information superhighway.
       </h4>
-      <div className="postCardArea">{postComponent}</div>
+      <div className="postCardArea">
+        <div className="blogPostCard">
+         {postComponent}
+        </div>
+      </div>
     </div>
   );
 }

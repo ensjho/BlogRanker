@@ -1,43 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { v4 as uuid } from "uuid";
-import { Link } from "react-router-dom";
-import "./AddPostForm.css";
+import React, {useState} from "react";
 
 
-const initialFormData = {
-  title: "",
-  description: "",
-  body: "",
-  titleError: "",
-  descriptionError: "",
-  bodyError: ""
-};
+//Form to edit existing post: renders only if setOnEdit staet is set as True
+function PostEditForm ({post, setOnEditPage, editBlogPost, handleEditToggle}){
 
-/** Form for adding a new post */
-function AddPostForm({ addBlogPost }) {
-  const [formData, setFormData] = useState(initialFormData);
-
-  const history = useHistory();
-
-  /** Validate inputs in the Form 
-   *  The client must fill out each inputs
-  */
-  const validateInputs = () => {
-    let titleError = "";
-    let descriptionError = "";
-    let bodyError = "";
-
-    if (!formData.title) titleError = "Title(Text) Required";
-    if (!formData.description) descriptionError = "Description(Text) Required"
-    if (!formData.body) bodyError = "Body(Text) Required";
-
-    if (titleError || descriptionError || bodyError) {
-      setFormData({ ...formData, titleError, descriptionError, bodyError });
-      return false
-    }
-    return true
+  const InitalFormData ={
+    title: post.title,
+    description: post.description,
+    body: post.body
   }
+
+  const [formData, setFormData] = useState(InitalFormData);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -47,25 +20,19 @@ function AddPostForm({ addBlogPost }) {
     }));
   };
 
-  const handleSubmit = (evt) => {
+  const handleEditSubmit = (evt) => {
     evt.preventDefault();
-    // Invoke validation method
-    let validation = validateInputs();
-    // If all the inputs are filled in,
-    if (validation) {
-      addBlogPost({ ...formData, id: uuid() });
-      //clear form
-      setFormData(initialFormData);
-      //Send the client back to the home page if the form is submitted.
-      history.push("/");
-    }
+    editBlogPost({ ...formData, id: post.id, comments: { ...post.comments } });
+    setOnEditPage(false);
   };
 
+
   return (
+  <div>
     <section className="postFormArea">
       <div>
         <div>
-          <div className="headerPost">Add Post</div>
+          <div className="headerPost">Edit Post</div>
           <div>
             <form className="postForm">
               <div className="form-group"></div>
@@ -80,7 +47,6 @@ function AddPostForm({ addBlogPost }) {
                     value={formData.title}
                     onChange={handleChange}
                   />
-                  <div className="error title">{formData.titleError}</div>
                 </div>
               </div>
               <div className="form-group">
@@ -100,7 +66,7 @@ function AddPostForm({ addBlogPost }) {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="body">Body:</label>
+                <label htmlFor="body">Body</label>
                 <div>
                   <textarea
                     id="body"
@@ -114,19 +80,20 @@ function AddPostForm({ addBlogPost }) {
                 </div>
               </div>
               <div>
-                <button onClick={handleSubmit} className="saveButton">
+                <button onClick={handleEditSubmit} className="saveButton">
                   Save
                 </button>
-                <Link to="/">
-                  <button className="cancelButton">Cancel</button>
-                </Link>
               </div>
+              <button onClick={handleEditToggle} className="cancelButton">
+                Cancel
+              </button>
             </form>
           </div>
         </div>
       </div>
     </section>
-  );
+  </div>
+);
 }
 
-export default AddPostForm;
+export default PostEditForm;

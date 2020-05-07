@@ -11,6 +11,16 @@
   margin-bottom: 40px;
 }
 
-.addPostLink {
-  padding-left: 10px;
+.navBar {
+  color: brown;
+  text-decoration: none;
 }
+
+.addPostLink {
+  padding-left: 20px;
+}
+
+.navBar:active {
+  color: gold;
+}
+

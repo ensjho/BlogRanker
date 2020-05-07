@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 
-function Comments({ postId, addComment, deleteComment }) {
-  // const [commentList, setCommentList] = useState([]);
+function Comments({ postId, addBlogComment, deleteBlogComment }) {
   const comments = useSelector((st) => st[postId].comments, shallowEqual);
   const [commentData, setCommentData] = useState({ body: "" });
 
@@ -18,36 +17,32 @@ function Comments({ postId, addComment, deleteComment }) {
   const handleCommentSubmit = (evt) => {
     evt.preventDefault();
     commentData.id = uuid();
-    // setCommentList([...commentList, commentData]);
-    addComment(commentData);
+    addBlogComment(commentData);
     setCommentData({ body: "" });
   };
 
   const handleCommentRemove = (evt) => {
-    // console.log(evt.target.id);
-    // const nonDeletedComments = commentList.filter(
-    //   (comment) => comment["id"] !== evt.target.id
-    // );
-    // setCommentList(nonDeletedComments);
-    console.log("evt.target.id", evt.target.id);
-    deleteComment(evt.target.id);
+    deleteBlogComment(evt.target.id);
   };
 
-  const commentArea = Object.keys(comments).map((id) => (
+  const commentsRendered = Object.keys(comments).map((id) => (
     <div key={id}>
       {comments[id].body}
       <button id={id} onClick={handleCommentRemove}>
-        {" "}
-        remove{" "}
+        remove
       </button>
     </div>
   ));
+  
+
+  //TODO: eventually want comment component, render one comment or rendering 100 COMMENTs
+  //just like what we are doing rn.
 
   return (
     <div className="commentsArea">
       <div>
         <h3>Comments</h3>
-        <div>{commentArea}</div>
+        <div>{commentsRendered}</div>
       </div>
       <form onSubmit={handleCommentSubmit}>
         <input
