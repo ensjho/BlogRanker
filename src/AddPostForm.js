@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
-import "./AddPostForm.css"
+import "./AddPostForm.css";
 
 /** Form for adding a new post */
 
@@ -13,14 +13,13 @@ const initialFormData = {
   // titleError: "",
   // descriptionError: "",
   // bodyError: ""
-}
+};
 
 function AddPostForm({ addPost }) {
   const [formData, setFormData] = useState(initialFormData);
   const [addedSuccess, setAddedSucess] = useState(null);
 
   const history = useHistory();
-
 
   // /** Validate inputs in the Form */
   // const validateInputs = () => {
@@ -42,27 +41,27 @@ function AddPostForm({ addPost }) {
   //   return true
   // }
 
-  const handleChange = evt => {
+  const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setFormData(formData => ({
+    setFormData((formData) => ({
       ...formData,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const gatherInput = evt => {
+  const gatherInput = (evt) => {
     evt.preventDefault();
     //Invoke validation method
     // let validation = validateInputs();
     // If all the inputs are filled in,
     // if (validation) {
-      //Adding ID (following the format specified in backend )
-      addPost({...formData, id: uuid() });
-      //clear form
-      setFormData(initialFormData);
-      //add success message
-      setAddedSucess(<div className="menuAdded text-center"> Item added! </div>)
-      history.push("/");
+    //Adding ID (following the format specified in backend )
+    addPost({ ...formData, id: uuid() });
+    //clear form
+    setFormData(initialFormData);
+    //add success message
+    setAddedSucess(<div className="menuAdded text-center"> Item added! </div>);
+    history.push("/");
     // }
   };
 
@@ -70,13 +69,10 @@ function AddPostForm({ addPost }) {
     <section className="postFormArea">
       <div>
         <div>
-          <div className="headerPost">
-            Add Post
-          </div>
+          <div className="headerPost">Add Post</div>
           <div>
-            <form className="postForm" >
-              <div className="form-group">
-              </div>
+            <form className="postForm">
+              <div className="form-group"></div>
               <div className="form-group">
                 <label htmlFor="title">Title:</label>
                 <div>
@@ -87,7 +83,7 @@ function AddPostForm({ addPost }) {
                     className="form-control"
                     value={formData.title}
                     onChange={handleChange}
-                    />
+                  />
                   <div className="error title">{formData.titleError}</div>
                 </div>
               </div>
@@ -102,7 +98,9 @@ function AddPostForm({ addPost }) {
                     value={formData.description}
                     onChange={handleChange}
                   />
-                <div className="error description">{formData.descriptionError}</div>
+                  <div className="error description">
+                    {formData.descriptionError}
+                  </div>
                 </div>
               </div>
               <div className="form-group">
@@ -122,11 +120,9 @@ function AddPostForm({ addPost }) {
               <div>
                 <button onClick={gatherInput} className="saveButton">
                   Save
-                </button> 
+                </button>
                 <Link to="/">
-                  <button className="cancelButton">
-                    Cancel
-                  </button>
+                  <button className="cancelButton">Cancel</button>
                 </Link>
               </div>
             </form>
