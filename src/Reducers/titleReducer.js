@@ -1,7 +1,13 @@
-import { FETCH_TITLES, ADD_POST, EDIT_POST, DELETE_POST } from "../actionTypes";
+import { FETCH_TITLES, ADD_POST, EDIT_POST, DELETE_POST, UP_VOTE } from "../actionTypes";
 
-// //TIPS FROM ELIE: here is the shape of what my state looks like and dealing with what's inside and why
-// //IMMER (libraray) => temporary copy of state and modifying using push and pop GOOD FURTHER STUDY
+/** Returns state in the form of 
+ * {postId: {id, title, description},
+ *  anotherPostId: {id, title, description}
+ * }
+ * 
+* you get from the backend when you get basic data on all posts
+* titles are used for Home route (TO fetch data that are only needed for this page)
+ */
 
 function titleReducer(state = {}, action) {
   switch (action.type) {
@@ -28,6 +34,17 @@ function titleReducer(state = {}, action) {
       let stateCopy = { ...state };
       delete stateCopy[action.postId];
       return stateCopy;
+
+    case UP_VOTE:
+      let stateCopyVote= { ...state,
+
+
+        [action.post.id]: {...action.post.id,
+
+          
+          votes: action.vote
+      }}
+      return stateCopyVote;
 
     default:
       return state;

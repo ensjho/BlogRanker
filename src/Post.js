@@ -5,6 +5,7 @@ import {
   getPostFromAPI,
   addCommentToAPI,
   deleteCommentFromAPI,
+  clearError
 } from "./actions";
 import PostEditForm from "./PostEditForm";
 import PostDisplay from "./PostDisplay";
@@ -20,27 +21,31 @@ function Post({ editBlogPost, deleteBlogPost }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const post = useSelector((st) => st.posts[id], shallowEqual);
+  const error = useSelector((st) => st.posts.error);
 
   //State for toggling between edit and detail page.
   const [onEditPage, setOnEditPage] = useState(false);
 
   useEffect(() => {
-    dispatch(getPostFromAPI(id));
+    dispatch(getPostFromAPI(id))
   }, [dispatch, id, onEditPage]);
 
   useEffect(() => {
-    if (post) setIsLoading(false);
+    if (post) setIsLoading(false)
   }, [post]);
 
+  //TODO: id as error inside of component to see error equals to id;
+
   // if post does not exist, redirect to Home page.
-  // if (!post) return <Redirect to="/" />;
+  if (error){
+    debugger
+  return <Redirect to="/" />}
 
   const addBlogComment = (comment) => {
     dispatch(addCommentToAPI(comment, id));
   };
 
   const deleteBlogComment = (commentId) => {
-    // console.log("deleteBlogComment happening");
     dispatch(deleteCommentFromAPI(commentId, id));
   };
 
@@ -67,23 +72,23 @@ function Post({ editBlogPost, deleteBlogPost }) {
             handleEditToggle={handleEditToggle}
           />
         ) : (
-          <div>
             <div>
-              <PostDisplay
-                post={post}
-                handleDelete={handleDelete}
-                handleEditToggle={handleEditToggle}
-              />
+              <div>
+                <PostDisplay
+                  post={post}
+                  handleDelete={handleDelete}
+                  handleEditToggle={handleEditToggle}
+                />
+              </div>
+              <div>
+                <Comments
+                  comments={post.comments}
+                  addBlogComment={addBlogComment}
+                  deleteBlogComment={deleteBlogComment}
+                />
+              </div>
             </div>
-            <div>
-              <Comments
-                comments={post.comments}
-                addBlogComment={addBlogComment}
-                deleteBlogComment={deleteBlogComment}
-              />
-            </div>
-          </div>
-        )}
+          )}
       </div>
     );
   };

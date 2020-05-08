@@ -73,7 +73,7 @@ function AddPostForm({ addBlogPost }) {
                   <input
                     id="title"
                     name="title"
-                    placeholder="titlte"
+                    placeholder="title"
                     className="form-control"
                     value={formData.title}
                     onChange={handleChange}

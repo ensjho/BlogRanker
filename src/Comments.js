@@ -3,8 +3,6 @@ import { v4 as uuid } from "uuid";
 import { useSelector, shallowEqual } from "react-redux";
 
 function Comments({ comments, addBlogComment, deleteBlogComment }) {
-  // const comments = useSelector((st) => st.posts[postId].comments, shallowEqual);
-
   const [commentData, setCommentData] = useState({ text: "" });
 
   const handleChange = (evt) => {
@@ -25,7 +23,6 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
     deleteBlogComment(evt.target.id);
   };
 
-  // console.log("comments is", comments);
   const commentsRendered = Object.keys(comments).map((id) => (
     <div key={id}>
       {comments[id].text}
@@ -34,9 +31,6 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
       </button>
     </div>
   ));
-
-  //TODO: eventually want comment component, render one comment or rendering 100 COMMENTs
-  //just like what we are doing rn.
 
   return (
     <div className="commentsArea">

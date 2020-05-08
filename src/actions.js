@@ -6,12 +6,25 @@ import {
   DELETE_COMMENT,
   FETCH_TITLES,
   FETCH_POST,
+  UP_VOTE
 } from "./actionTypes";
 
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5000";
 
+
+/**titles is an res.data (array) you get from the api  get request 
+in the form of {id, title, description, votes}
+[
+  {
+    "id": 4,
+    "title": "Our first Post",
+    "description": "MJ",
+    "votes": 0
+  }
+]
+*/
 function fetchTitles(titles) {
   return {
     type: FETCH_TITLES,
@@ -19,12 +32,45 @@ function fetchTitles(titles) {
   };
 }
 
+/**post is an res.data(object) you get from the api get request to get
+ * details about a post in the form of {id, title, description, votes, comments}
+ * 
+ * {
+  "id": 4,
+  "title": "Our first Post",
+  "description": "MJ",
+  "body": "i like basketball",
+  "votes": 0,
+  "comments": [
+    {
+      "id": 7,
+      "text": "Hello the last dance"
+    }
+  ]
+  }
+ */
+
 function fetchPost(post) {
   return {
     type: FETCH_POST,
     post,
   };
 }
+
+
+
+/**
+ * post is what you get back from API once you post a new post
+ *{
+    "id": 10,
+    "title": "First 123Post",
+    "description": "Bes123t post ever!",
+    "body": "Everyone love213s posting first. I win!",
+    "votes": 0
+  }
+
+  applies for addPost/ edit post (what you get back when you edit)
+ */
 
 function addPost(post) {
   return {
@@ -40,6 +86,7 @@ function editPost(post) {
   };
 }
 
+/** postId is postId(string) for specific post */
 function deletePost(postId) {
   return {
     type: DELETE_POST,
@@ -47,6 +94,15 @@ function deletePost(postId) {
   };
 }
 
+/** postId is postId(string) for specific post 
+ * comment is what you get from api request to grab comments for specific post
+  * [
+      {
+        "id": 7,
+        "text": "Hello the last dance"
+      }
+    ]
+*/
 function addComment(comment, postId) {
   return {
     type: ADD_COMMENT,
@@ -55,6 +111,9 @@ function addComment(comment, postId) {
   };
 }
 
+/** postId is postId(string) for specific post 
+ * commentId is commentId(string) for specific comment
+*/
 function deleteComment(commentId, postId) {
   return {
     type: DELETE_COMMENT,
@@ -63,12 +122,31 @@ function deleteComment(commentId, postId) {
   };
 }
 
+/**{
+  "votes": 1
+} */
+
+function upVote(votes){
+  return {
+    type: UP_VOTE,
+    votes
+  }
+}
 function handleError(error) {
   return {
     type: "ERROR",
-    error,
+    error: true,
   };
 }
+
+export function clearError(){
+  return {
+    type: "ERROR",
+    error: false,
+  };
+}
+
+
 
 export function getTitlesFromAPI() {
   return async function thunk(dispatch) {
@@ -76,7 +154,7 @@ export function getTitlesFromAPI() {
       let res = await axios.get(`${BASE_URL}/api/posts`);
       dispatch(fetchTitles(res.data));
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
@@ -87,7 +165,7 @@ export function getPostFromAPI(postId) {
       let res = await axios.get(`${BASE_URL}/api/posts/${postId}`);
       dispatch(fetchPost(res.data));
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
@@ -98,7 +176,7 @@ export function addPostToAPI(post) {
       let res = await axios.post(`${BASE_URL}/api/posts/`, post);
       dispatch(addPost(res.data));
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
@@ -109,7 +187,7 @@ export function editPostToAPI(post, postId) {
       let res = await axios.put(`${BASE_URL}/api/posts/${postId}`, post);
       dispatch(editPost(res.data));
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
@@ -122,7 +200,7 @@ export function deletePostFromAPI(postId) {
         dispatch(deletePost(postId));
       }
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
@@ -136,44 +214,33 @@ export function addCommentToAPI(comment, postId) {
       );
       dispatch(addComment(res.data, postId));
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
 
 export function deleteCommentFromAPI(commentId, postId) {
-  console.log("commentId, postId", commentId, postId);
   return async function thunk(dispatch) {
     try {
       let res = await axios.delete(
         `${BASE_URL}/api/posts/${postId}/comments/${commentId}`
       );
-      console.log(`${BASE_URL}/api/posts/${postId}/comments/${commentId}`);
       if (res.data.message === "deleted") {
         dispatch(deleteComment(commentId, postId));
       }
     } catch (error) {
-      dispatch(handleError(error.response.data));
+      dispatch(handleError(error));
     }
   };
 }
 
-//TIPS FROM ELIE: payload is too generalized,
-//also what does each post take in, so that we can help other developers know what we are
-//getting (YOU ARE GONNA PROBABLY FORGET EVERYTHING WHEN YOU COME BACK IN THE FUTRE)
-
-// function addComment(postId, comment) {
-//   return {
-//     type: ADD_COMMENT,
-//     payload: { postId, comment: { ...comment } },
-//   };
-// }
-
-// function deleteComment(postId, commentId) {
-//   return {
-//     type: DELETE_COMMENT,
-//     payload: { postId, commentId },
-//   };
-// }
-
-// export { addPost, editPost, deletePost, addComment, deleteComment };
+export function upVoteToAPI(postId) {
+  return async function thunk(dispatch) {
+    try {
+      let res = await axios.post(`${BASE_URL}/api/posts/${postId}/vote/up}`);
+      dispatch(upVote(res.data));
+    } catch (error) {
+      dispatch(handleError(error));
+    }
+  };
+}

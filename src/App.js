@@ -7,8 +7,6 @@ import AddPostForm from "./AddPostForm";
 import Post from "./Post";
 import { Route, Switch, Redirect } from "react-router-dom";
 import {
-  editPost,
-  deletePost,
   getTitlesFromAPI,
   addPostToAPI,
   editPostToAPI,
@@ -36,6 +34,8 @@ function App() {
     dispatch(deletePostFromAPI(postId));
   };
 
+  //TODO: DeleteBlog post can be done in POST move down dispatch in post component
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -55,9 +55,9 @@ function App() {
               />
             </Route>
           </Switch>
-          {/* <Route>
+          <Route>
             <Redirect to="/"></Redirect>
-          </Route> */}
+          </Route>
         </main>
       </BrowserRouter>
     </div>
