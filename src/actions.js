@@ -6,15 +6,14 @@ import {
   DELETE_COMMENT,
   FETCH_TITLES,
   FETCH_POST,
-  UP_VOTE
+  VOTE,
 } from "./actionTypes";
 
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5000";
 
-
-/**titles is an res.data (array) you get from the api  get request 
+/**titles is an res.data (array) you get from the api  get request
 in the form of {id, title, description, votes}
 [
   {
@@ -34,7 +33,7 @@ function fetchTitles(titles) {
 
 /**post is an res.data(object) you get from the api get request to get
  * details about a post in the form of {id, title, description, votes, comments}
- * 
+ *
  * {
   "id": 4,
   "title": "Our first Post",
@@ -56,8 +55,6 @@ function fetchPost(post) {
     post,
   };
 }
-
-
 
 /**
  * post is what you get back from API once you post a new post
@@ -94,7 +91,7 @@ function deletePost(postId) {
   };
 }
 
-/** postId is postId(string) for specific post 
+/** postId is postId(string) for specific post
  * comment is what you get from api request to grab comments for specific post
   * [
       {
@@ -111,9 +108,9 @@ function addComment(comment, postId) {
   };
 }
 
-/** postId is postId(string) for specific post 
+/** postId is postId(string) for specific post
  * commentId is commentId(string) for specific comment
-*/
+ */
 function deleteComment(commentId, postId) {
   return {
     type: DELETE_COMMENT,
@@ -122,15 +119,16 @@ function deleteComment(commentId, postId) {
   };
 }
 
-/**{
+/**input votes {
   "votes": 1
 } */
 
-function upVote(votes){
+function vote(votes, postId) {
   return {
-    type: UP_VOTE,
-    votes
-  }
+    type: VOTE,
+    votes: votes.votes,
+    postId,
+  };
 }
 function handleError(error) {
   return {
@@ -139,14 +137,12 @@ function handleError(error) {
   };
 }
 
-export function clearError(){
+export function clearError() {
   return {
     type: "ERROR",
     error: false,
   };
 }
-
-
 
 export function getTitlesFromAPI() {
   return async function thunk(dispatch) {
@@ -234,11 +230,13 @@ export function deleteCommentFromAPI(commentId, postId) {
   };
 }
 
-export function upVoteToAPI(postId) {
+export function voteToAPI(postId, direction = "up") {
   return async function thunk(dispatch) {
     try {
-      let res = await axios.post(`${BASE_URL}/api/posts/${postId}/vote/up}`);
-      dispatch(upVote(res.data));
+      let res = await axios.post(
+        `${BASE_URL}/api/posts/${postId}/vote/${direction}`
+      );
+      dispatch(vote(res.data, postId));
     } catch (error) {
       dispatch(handleError(error));
     }

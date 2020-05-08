@@ -1,24 +1,24 @@
 import React from "react";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useDispatch } from "react-redux";
+import { voteToAPI } from "./actions";
 
-function Vote({postId, votes}){
-  let vote;
-  let dispatch =  useDispatch();
-
+function Vote({ postId, votes }) {
+  // Think about where to put dispatches
+  let dispatch = useDispatch();
+  const upVote = () => {
+    dispatch(voteToAPI(postId, "up"));
+  };
+  const downVote = () => {
+    dispatch(voteToAPI(postId, "down"));
+  };
 
   return (
     <div>
       {votes}
-      <button>
-        UP
-      </button>
-      <button>
-        Down
-      </button>
+      <button onClick={upVote}>UP</button>
+      <button onClick={downVote}>Down</button>
     </div>
-  )
-
-
+  );
 }
 
 export default Vote;

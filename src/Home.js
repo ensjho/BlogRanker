@@ -2,18 +2,17 @@ import React from "react";
 import BlogPostCard from "./BlogPostCard";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  clearError
-} from "./actions";
+import { clearError } from "./actions";
 //Renders Home Page with post cards (have title and description displayed)
-function Home({ titles }) {
+function Home({ sortedPostIds, titles }) {
   const dispatch = useDispatch();
   const error = useSelector((st) => st.posts.error);
 
-  if (error){
-    dispatch(clearError())}
+  if (error) {
+    dispatch(clearError());
+  }
 
-  const postComponent = Object.keys(titles).map((id) => (
+  const postComponent = sortedPostIds.map((id) => (
     <BlogPostCard
       key={id}
       id={id}

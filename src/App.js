@@ -6,33 +6,36 @@ import Header from "./Header";
 import AddPostForm from "./AddPostForm";
 import Post from "./Post";
 import { Route, Switch, Redirect } from "react-router-dom";
-import {
-  getTitlesFromAPI,
-  addPostToAPI,
-  editPostToAPI,
-  deletePostFromAPI,
-} from "./actions";
+import { getTitlesFromAPI } from "./actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 function App() {
   const titles = useSelector((st) => st.titles, shallowEqual);
   const dispatch = useDispatch();
 
+  // Sort titles by votes, descending
+  let sortedTitles = [];
+  for (let postId in titles) {
+    // Push a [postId, vote] to sortedTitles
+    sortedTitles.push([postId, titles[postId].votes]);
+  }
+  // Sort by vote descending, resulting in a sorted
+  // array, e.g.
+  // sortedTitles = [["productId1", 5], ["productId2", 3]...]
+  sortedTitles.sort(function (a, b) {
+    return b[1] - a[1];
+  });
+
+  // Build an array of just postIds
+  // (sorted by votes, descending)
+  let sortedPostIds = [];
+  for (let postIdVote of sortedTitles) {
+    sortedPostIds.push(postIdVote[0]);
+  }
+
   useEffect(() => {
     dispatch(getTitlesFromAPI());
   }, [dispatch]);
-
-  const addBlogPost = (post) => {
-    dispatch(addPostToAPI(post));
-  };
-
-  const editBlogPost = (post, postId) => {
-    dispatch(editPostToAPI(post, postId));
-  };
-
-  const deleteBlogPost = (postId) => {
-    dispatch(deletePostFromAPI(postId));
-  };
 
   //TODO: DeleteBlog post can be done in POST move down dispatch in post component
 
@@ -43,16 +46,13 @@ function App() {
         <main>
           <Switch>
             <Route exact path="/">
-              <Home titles={titles} />
+              <Home sortedPostIds={sortedPostIds} titles={titles} />
             </Route>
             <Route exact path="/new">
-              <AddPostForm addBlogPost={addBlogPost} />
+              <AddPostForm />
             </Route>
             <Route exact path="/:id">
-              <Post
-                editBlogPost={editBlogPost}
-                deleteBlogPost={deleteBlogPost}
-              />
+              <Post />
             </Route>
           </Switch>
           <Route>

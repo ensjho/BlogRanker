@@ -1,12 +1,18 @@
-import { FETCH_TITLES, ADD_POST, EDIT_POST, DELETE_POST, UP_VOTE } from "../actionTypes";
+import {
+  FETCH_TITLES,
+  ADD_POST,
+  EDIT_POST,
+  DELETE_POST,
+  VOTE,
+} from "../actionTypes";
 
-/** Returns state in the form of 
+/** Returns state in the form of
  * {postId: {id, title, description},
  *  anotherPostId: {id, title, description}
  * }
- * 
-* you get from the backend when you get basic data on all posts
-* titles are used for Home route (TO fetch data that are only needed for this page)
+ *
+ * you get from the backend when you get basic data on all posts
+ * titles are used for Home route (TO fetch data that are only needed for this page)
  */
 
 function titleReducer(state = {}, action) {
@@ -35,16 +41,11 @@ function titleReducer(state = {}, action) {
       delete stateCopy[action.postId];
       return stateCopy;
 
-    case UP_VOTE:
-      let stateCopyVote= { ...state,
-
-
-        [action.post.id]: {...action.post.id,
-
-          
-          votes: action.vote
-      }}
-      return stateCopyVote;
+    case VOTE:
+      return {
+        ...state,
+        [action.postId]: { ...state[action.postId], votes: action.votes },
+      };
 
     default:
       return state;

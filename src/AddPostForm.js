@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./AddPostForm.css";
+import { addPostToAPI } from "./actions";
+import { useDispatch } from "react-redux";
 
 const initialFormData = {
   title: "",
@@ -13,10 +15,14 @@ const initialFormData = {
 };
 
 /** Form for adding a new post */
-function AddPostForm({ addBlogPost }) {
+function AddPostForm() {
   const [formData, setFormData] = useState(initialFormData);
-
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const addBlogPost = (post) => {
+    dispatch(addPostToAPI(post));
+  };
 
   /** Validate inputs in the Form
    *  The client must fill out each inputs
