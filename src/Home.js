@@ -2,20 +2,17 @@ import React from "react";
 import BlogPostCard from "./BlogPostCard";
 
 //Renders Home Page with post cards (have title and description displayed)
-function Home({ posts }) {
-
-  console.log(posts);
-  
-  const postComponent = Object.keys(posts).map((id) => (
+function Home({ titles }) {
+  const postComponent = Object.keys(titles).map((id) => (
     <BlogPostCard
       key={id}
       id={id}
-      title={posts[id].title}
-      description={posts[id].description}
+      title={titles[id].title}
+      description={titles[id].description}
     />
   ));
-  // // console.log(posts)
-  //   const postComponent = posts.map((post) => (
+  // // console.log(titles)
+  //   const postComponent = titles.map((post) => (
   //   <BlogPostCard
   //     key={post.id}
   //     id={post.id}
@@ -24,8 +21,6 @@ function Home({ posts }) {
   //   />
   // ));
 
-
-
   return (
     <div className="homeContainer">
       <h4>
@@ -33,9 +28,7 @@ function Home({ posts }) {
         the information superhighway.
       </h4>
       <div className="postCardArea">
-        <div className="blogPostCard">
-         {postComponent}
-        </div>
+        <div className="blogPostCard">{postComponent}</div>
       </div>
     </div>
   );

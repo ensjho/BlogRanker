@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
@@ -6,28 +6,34 @@ import Header from "./Header";
 import AddPostForm from "./AddPostForm";
 import Post from "./Post";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { addPost, editPost, deletePost, getPostsFromAPI } from "./actions";
+import {
+  editPost,
+  deletePost,
+  getTitlesFromAPI,
+  addPostToAPI,
+  editPostToAPI,
+  deletePostFromAPI,
+} from "./actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 function App() {
-  const posts = useSelector((st) => st.posts, shallowEqual);
+  const titles = useSelector((st) => st.titles, shallowEqual);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    dispatch(getPostsFromAPI());
+    dispatch(getTitlesFromAPI());
   }, [dispatch]);
 
   const addBlogPost = (post) => {
-    dispatch(addPost(post));
+    dispatch(addPostToAPI(post));
   };
 
-  const editBlogPost = (post) => {
-    dispatch(editPost(post));
+  const editBlogPost = (post, postId) => {
+    dispatch(editPostToAPI(post, postId));
   };
 
-  const deleteBlogPost = (post) => {
-    dispatch(deletePost(post));
+  const deleteBlogPost = (postId) => {
+    dispatch(deletePostFromAPI(postId));
   };
 
   return (
@@ -37,22 +43,21 @@ function App() {
         <main>
           <Switch>
             <Route exact path="/">
-              <Home posts={posts} />
+              <Home titles={titles} />
             </Route>
             <Route exact path="/new">
               <AddPostForm addBlogPost={addBlogPost} />
             </Route>
             <Route exact path="/:id">
               <Post
-                posts={posts}
                 editBlogPost={editBlogPost}
                 deleteBlogPost={deleteBlogPost}
               />
             </Route>
           </Switch>
-          <Route>
+          {/* <Route>
             <Redirect to="/"></Redirect>
-          </Route>
+          </Route> */}
         </main>
       </BrowserRouter>
     </div>

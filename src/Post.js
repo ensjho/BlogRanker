@@ -1,37 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useHistory, Redirect } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Comments from "./Comments";
-import { addComment, deleteComment } from "./actions";
+import {
+  getPostFromAPI,
+  addCommentToAPI,
+  deleteCommentFromAPI,
+} from "./actions";
 import PostEditForm from "./PostEditForm";
-import PostDisplay from "./PostDisplay"
+import PostDisplay from "./PostDisplay";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 /** Renders details about the post when onEditPage is set to False;
  *  Renders editing form for the post when onEditPage is set to True;
  *  onEditPage state is toggled by a button.
  */
-function Post({ posts, editBlogPost, deleteBlogPost }) {
+function Post({ editBlogPost, deleteBlogPost }) {
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const post = useSelector((st) => st.posts[id], shallowEqual);
 
   //State for toggling between edit and detail page.
   const [onEditPage, setOnEditPage] = useState(false);
-  const post = posts[id];
+
+  useEffect(() => {
+    dispatch(getPostFromAPI(id));
+  }, [dispatch, id, onEditPage]);
+
+  useEffect(() => {
+    if (post) setIsLoading(false);
+  }, [post]);
 
   // if post does not exist, redirect to Home page.
-  if (!post) return <Redirect to="/" />
+  // if (!post) return <Redirect to="/" />;
 
   const addBlogComment = (comment) => {
-    dispatch(addComment(id, comment));
+    dispatch(addCommentToAPI(comment, id));
   };
 
   const deleteBlogComment = (commentId) => {
-    dispatch(deleteComment(id, commentId));
+    // console.log("deleteBlogComment happening");
+    dispatch(deleteCommentFromAPI(commentId, id));
   };
 
   const handleDelete = () => {
-    deleteBlogPost(post);
+    deleteBlogPost(id);
     history.push("/");
   };
 
@@ -39,18 +53,21 @@ function Post({ posts, editBlogPost, deleteBlogPost }) {
   const handleEditToggle = () => {
     if (!onEditPage) {
       setOnEditPage((old) => !old);
-    };
-  }
-  
-  return (
-    <div>
-      {onEditPage ? <PostEditForm
-        post={post}
-        setOnEditPage={setOnEditPage}
-        editBlogPost={editBlogPost}
-        handleEditToggle={handleEditToggle}
-      />
-        : <div>
+    }
+  };
+
+  const renderPost = () => {
+    return (
+      <div>
+        {onEditPage ? (
+          <PostEditForm
+            post={post}
+            setOnEditPage={setOnEditPage}
+            editBlogPost={editBlogPost}
+            handleEditToggle={handleEditToggle}
+          />
+        ) : (
+          <div>
             <div>
               <PostDisplay
                 post={post}
@@ -60,15 +77,18 @@ function Post({ posts, editBlogPost, deleteBlogPost }) {
             </div>
             <div>
               <Comments
-                postId={id}
+                comments={post.comments}
                 addBlogComment={addBlogComment}
                 deleteBlogComment={deleteBlogComment}
               />
             </div>
           </div>
-      }
-    </div>
-  )
+        )}
+      </div>
+    );
+  };
+
+  return isLoading ? <p>Loading...</p> : renderPost();
 }
 
 export default Post;

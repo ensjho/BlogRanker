@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useSelector, shallowEqual } from "react-redux";
 
-function Comments({ postId, addBlogComment, deleteBlogComment }) {
-  const comments = useSelector((st) => st[postId].comments, shallowEqual);
-  const [commentData, setCommentData] = useState({ body: "" });
+function Comments({ comments, addBlogComment, deleteBlogComment }) {
+  // const comments = useSelector((st) => st.posts[postId].comments, shallowEqual);
+
+  const [commentData, setCommentData] = useState({ text: "" });
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -16,24 +17,23 @@ function Comments({ postId, addBlogComment, deleteBlogComment }) {
 
   const handleCommentSubmit = (evt) => {
     evt.preventDefault();
-    commentData.id = uuid();
     addBlogComment(commentData);
-    setCommentData({ body: "" });
+    setCommentData({ text: "" });
   };
 
   const handleCommentRemove = (evt) => {
     deleteBlogComment(evt.target.id);
   };
 
+  // console.log("comments is", comments);
   const commentsRendered = Object.keys(comments).map((id) => (
     <div key={id}>
-      {comments[id].body}
+      {comments[id].text}
       <button id={id} onClick={handleCommentRemove}>
         remove
       </button>
     </div>
   ));
-  
 
   //TODO: eventually want comment component, render one comment or rendering 100 COMMENTs
   //just like what we are doing rn.
@@ -46,9 +46,9 @@ function Comments({ postId, addBlogComment, deleteBlogComment }) {
       </div>
       <form onSubmit={handleCommentSubmit}>
         <input
-          name="body"
+          name="text"
           onChange={handleChange}
-          value={commentData.body}
+          value={commentData.text}
           placeholder="New Commnet"
         ></input>
         <button>Add</button>

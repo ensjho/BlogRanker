@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import "./AddPostForm.css";
-
 
 const initialFormData = {
   title: "",
@@ -11,7 +9,7 @@ const initialFormData = {
   body: "",
   titleError: "",
   descriptionError: "",
-  bodyError: ""
+  bodyError: "",
 };
 
 /** Form for adding a new post */
@@ -20,24 +18,24 @@ function AddPostForm({ addBlogPost }) {
 
   const history = useHistory();
 
-  /** Validate inputs in the Form 
+  /** Validate inputs in the Form
    *  The client must fill out each inputs
-  */
+   */
   const validateInputs = () => {
     let titleError = "";
     let descriptionError = "";
     let bodyError = "";
 
     if (!formData.title) titleError = "Title(Text) Required";
-    if (!formData.description) descriptionError = "Description(Text) Required"
+    if (!formData.description) descriptionError = "Description(Text) Required";
     if (!formData.body) bodyError = "Body(Text) Required";
 
     if (titleError || descriptionError || bodyError) {
       setFormData({ ...formData, titleError, descriptionError, bodyError });
-      return false
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -53,7 +51,7 @@ function AddPostForm({ addBlogPost }) {
     let validation = validateInputs();
     // If all the inputs are filled in,
     if (validation) {
-      addBlogPost({ ...formData, id: uuid() });
+      addBlogPost(formData);
       //clear form
       setFormData(initialFormData);
       //Send the client back to the home page if the form is submitted.
