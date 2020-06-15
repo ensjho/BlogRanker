@@ -1,4 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Blog Ranker
+Blog site that allows users to like, comment, and up vote posts.
+(React/ Redux / Express)
+
 
 ## Available Scripts
 

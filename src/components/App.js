@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
+import "../CSS/App.css";
 import Home from "./Home";
 import Header from "./Header";
 import AddPostForm from "./AddPostForm";
 import Post from "./Post";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { getTitlesFromAPI } from "./actions";
+import { getTitlesFromAPI } from "../actions/actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
+
 
 function App() {
   const titles = useSelector((st) => st.titles, shallowEqual);

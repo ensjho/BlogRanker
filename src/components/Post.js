@@ -7,7 +7,7 @@ import {
   deletePostFromAPI,
   addCommentToAPI,
   deleteCommentFromAPI,
-} from "./actions";
+} from "../actions/actions";
 import PostEditForm from "./PostEditForm";
 import PostDisplay from "./PostDisplay";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";

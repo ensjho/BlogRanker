@@ -4,7 +4,7 @@ import {
   DELETE_POST,
   FETCH_POST,
   VOTE,
-} from "../actionTypes";
+} from "../actions/actionTypes";
 
 //TODO: IMMER
 

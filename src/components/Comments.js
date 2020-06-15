@@ -21,14 +21,19 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
     deleteBlogComment(evt.target.id);
   };
 
-  const commentsRendered = Object.keys(comments).map((id) => (
-    <div key={id}>
-      {comments[id].text}
-      <button id={id} onClick={handleCommentRemove}>
-        remove
+  let commentsRendered;
+
+  if (comments) {
+    commentsRendered = Object.keys(comments).map((id) => (
+      <div key={id}>
+        {comments[id].text}
+        <button id={id} onClick={handleCommentRemove}>
+          remove
       </button>
-    </div>
-  ));
+      </div>
+    ));
+  }
+
 
   return (
     <div className="commentsArea">

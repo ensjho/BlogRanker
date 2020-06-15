@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "./AddPostForm.css";
-import { addPostToAPI } from "./actions";
+import "../CSS/AddPostForm.css";
+import { addPostToAPI } from "../actions/actions";
 import { useDispatch } from "react-redux";
 
 const initialFormData = {
@@ -66,20 +66,17 @@ function AddPostForm() {
   };
 
   return (
-    <section className="postFormArea">
-      <div>
-        <div>
-          <div className="headerPost">Add Post</div>
+    <section >
+      <div className="postFormArea">
+          <div className="headerPost">Add a New Post</div>
           <div>
             <form className="postForm">
-              <div className="form-group"></div>
               <div className="form-group">
-                <label htmlFor="title">Title:</label>
                 <div>
                   <input
                     id="title"
                     name="title"
-                    placeholder="title"
+                    placeholder="Insert Title"
                     className="form-control"
                     value={formData.title}
                     onChange={handleChange}
@@ -88,12 +85,11 @@ function AddPostForm() {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description:</label>
                 <div>
                   <textarea
                     id="description"
                     name="description"
-                    placeholder="Description"
+                    placeholder="Insert Description"
                     className="form-control"
                     value={formData.description}
                     onChange={handleChange}
@@ -104,12 +100,11 @@ function AddPostForm() {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="body">Body:</label>
                 <div>
                   <textarea
                     id="body"
                     name="body"
-                    placeholder="body"
+                    placeholder="Insert Body"
                     className="form-control"
                     value={formData.body}
                     onChange={handleChange}
@@ -119,7 +114,7 @@ function AddPostForm() {
               </div>
               <div>
                 <button onClick={handleSubmit} className="saveButton">
-                  Save
+                  Submit
                 </button>
                 <Link to="/">
                   <button className="cancelButton">Cancel</button>
@@ -127,7 +122,6 @@ function AddPostForm() {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </section>
   );

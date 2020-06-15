@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { voteToAPI } from "./actions";
+import { voteToAPI } from "../actions/actions";
 
 function Vote({ postId, votes }) {
   // Think about where to put dispatches

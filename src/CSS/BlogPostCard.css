@@ -1,0 +1,36 @@
+.postcardHome {
+  text-align: left;
+  margin: auto;
+  width: 80%;
+  border: solid;
+  border-color: #003c69;
+  border-width: 1.5px;
+  border-radius: 10px;
+  padding-top: 30px;
+  padding-left: 20px;
+  display:flex;
+}
+
+.blogpostCard {
+  text-decoration: none;
+  color:black; 
+  font-size: 15px;
+}
+
+.title {
+  margin-bottom: 5px;
+  font-size: 20px;
+  margin-left: 0;
+}
+
+img {
+  padding-bottom: 20px;
+  width: 100%;
+  margin-right: 0;
+  position: relative;
+}
+
+.ranking-container{
+  width: 50px;
+  justify-content: flex-end;
+}

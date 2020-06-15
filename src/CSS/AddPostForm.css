@@ -1,0 +1,61 @@
+.postFormArea{
+  text-align: center;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.headerPost{
+  font-size: 30px;
+  margin-bottom: 20px;
+  color:#0179D3;
+}
+
+.form-group{
+  margin-top: 10px;
+}
+
+textarea{
+  width: 70%;
+  height: 150px;
+  font-size: 15px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+input {
+  width: 70%;
+  padding-left: 10px;
+  height: 50px;
+  font-size: 15px;
+}
+
+input::placeholder{
+  color:#0179D3;
+}
+
+textarea::placeholder{
+  color:#0179D3;
+}
+
+button {
+  background-color: #0179D3;
+  color: white;
+  border: solid;
+  border-width: 1px;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color:#006cbd;
+}
+
+.error {
+  color: #065f61;
+  text-align: center;
+}

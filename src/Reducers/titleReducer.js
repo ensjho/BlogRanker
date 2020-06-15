@@ -4,7 +4,7 @@ import {
   EDIT_POST,
   DELETE_POST,
   VOTE,
-} from "../actionTypes";
+} from "../actions/actionTypes";
 
 /** Returns state in the form of
  * {postId: {id, title, description},
