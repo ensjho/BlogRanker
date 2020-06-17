@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../CSS/Post.css"
 import { useParams, useHistory, Redirect } from "react-router-dom";
 import Comments from "./Comments";
 import {
@@ -26,7 +27,7 @@ function Post() {
   const error = useSelector((st) => st.posts.error);
 
   const editBlogPost = (post, postId) => {
-    dispatch(editPostToAPI(post, postId));
+    dispatch(editPostToAPI(post, postId))
   };
 
   const deleteBlogPost = (postId) => {
@@ -90,14 +91,14 @@ function Post() {
                 handleEditToggle={handleEditToggle}
               />
             </div>
-            <Vote postId={id} votes={post.votes} />
-            <div>
+            <div className="postDisplay-Vote">
+              <Vote postId={id} votes={post.votes} />
+            </div>
               <Comments
                 comments={post.comments}
                 addBlogComment={addBlogComment}
                 deleteBlogComment={deleteBlogComment}
               />
-            </div>
           </div>
         )}
       </div>

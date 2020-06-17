@@ -1,0 +1,51 @@
+.postDetail-container {
+  height: 600px;
+}
+
+.postdisplay-container{
+  width: 70%;
+  text-align: left;
+  margin: auto;
+}
+
+
+
+/**Button Area */
+.button-container{
+  text-align: right;
+  margin-top: 20px;
+}
+
+.remove-button{
+  margin:0;
+  margin-right: 20px;
+  background-color: #9A0E35;
+  font-size: 20px;
+}
+
+.edit-button{
+  margin:0;
+  font-size: 20px;
+}
+
+.remove-button:hover{
+  background-color: #6b0925;
+}
+
+
+/**Post Display Area */
+
+.titlePost-container{
+  border-bottom:solid;
+}
+
+.descriptionPost-container{
+  font-size: 30px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.bodyPost-container{
+  font-size: 20px;
+  border-color: gainsboro;
+}

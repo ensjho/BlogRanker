@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../CSS/Comments.css"
+
 
 function Comments({ comments, addBlogComment, deleteBlogComment }) {
   const [commentData, setCommentData] = useState({ text: "" });
@@ -13,8 +15,10 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
 
   const handleCommentSubmit = (evt) => {
     evt.preventDefault();
-    addBlogComment(commentData);
-    setCommentData({ text: "" });
+    if (!(commentData.text === "")) {
+      addBlogComment(commentData);
+      setCommentData({ text: "" });
+    }
   };
 
   const handleCommentRemove = (evt) => {
@@ -25,21 +29,22 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
 
   if (comments) {
     commentsRendered = Object.keys(comments).map((id) => (
-      <div key={id}>
+      <div className="single-comment" key={id}>
+        <div className="comment-content">
         {comments[id].text}
-        <button id={id} onClick={handleCommentRemove}>
-          remove
-      </button>
+        </div>
+        <button id={id} className="comment-remove-button" onClick={handleCommentRemove}>
+          X
+        </button>
       </div>
     ));
   }
 
 
   return (
-    <div className="commentsArea">
+    <div className="comments-container">
       <div>
-        <h3>Comments</h3>
-        <div>{commentsRendered}</div>
+        <h1>Comments</h1>
       </div>
       <form onSubmit={handleCommentSubmit}>
         <input
@@ -48,8 +53,11 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
           value={commentData.text}
           placeholder="New Commnet"
         ></input>
-        <button>Add</button>
+        <button className="addComment-Button">Add</button>
       </form>
+      <div className="commentsRendered-container">
+        {commentsRendered}
+      </div>
     </div>
   );
 }

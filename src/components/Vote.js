@@ -1,9 +1,9 @@
 import React from "react";
+import "../CSS/Vote.css";
 import { useDispatch } from "react-redux";
 import { voteToAPI } from "../actions/actions";
 
 function Vote({ postId, votes }) {
-  // Think about where to put dispatches
   let dispatch = useDispatch();
   const upVote = () => {
     dispatch(voteToAPI(postId, "up"));
@@ -14,11 +14,13 @@ function Vote({ postId, votes }) {
 
   return (
     <div>
-      {votes}
-      <button onClick={upVote}>UP</button>
-      <button onClick={downVote}>Down</button>
-    </div>
-  );
+      <div>
+        Votes: {votes}
+      </div>
+      <button className="upVote-button" onClick={upVote}>Up</button>
+      <button className="downVote-button" onClick={downVote}>Down</button>
+    </div >
+  )
 }
 
 export default Vote;

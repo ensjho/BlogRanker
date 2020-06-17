@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../CSS/editForm.css"
+
 
 //Form to edit existing post: renders only if setOnEdit staet is set as True
 function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
@@ -21,7 +23,7 @@ function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
   const handleEditSubmit = (evt) => {
     evt.preventDefault();
     editBlogPost(formData, post.id);
-    setOnEditPage(false);
+    setTimeout(function(){setOnEditPage(false)},500);
   };
 
   return (
@@ -31,15 +33,14 @@ function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
           <div>
             <div className="headerPost">Edit Post</div>
             <div>
-              <form className="postForm">
+              <form className="editForm">
                 <div className="form-group"></div>
                 <div className="form-group">
-                  <label htmlFor="title">Title:</label>
                   <div>
                     <input
                       id="title"
                       name="title"
-                      placeholder="titlte"
+                      placeholder="Titlte"
                       className="form-control"
                       value={formData.title}
                       onChange={handleChange}
@@ -47,7 +48,6 @@ function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="description">Description:</label>
                   <div>
                     <textarea
                       id="description"
@@ -63,12 +63,11 @@ function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="body">Body</label>
                   <div>
                     <textarea
                       id="body"
                       name="body"
-                      placeholder="body"
+                      placeholder="Body"
                       className="form-control"
                       value={formData.body}
                       onChange={handleChange}
@@ -80,10 +79,11 @@ function PostEditForm({ post, setOnEditPage, editBlogPost, handleEditToggle }) {
                   <button onClick={handleEditSubmit} className="saveButton">
                     Save
                   </button>
+                  <button onClick={handleEditToggle} className="cancelButton">
+                    Cancel
+                  </button>
                 </div>
-                <button onClick={handleEditToggle} className="cancelButton">
-                  Cancel
-                </button>
+
               </form>
             </div>
           </div>

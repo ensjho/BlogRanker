@@ -9,6 +9,13 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { getTitlesFromAPI } from "../actions/actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
+/** Overall blog application:
+ *
+ * - shows header that contains nav links, and contains routes to:
+ *   - new form
+ *   - homepage
+ *   - individual posts
+ */
 
 function App() {
   const titles = useSelector((st) => st.titles, shallowEqual);
@@ -37,8 +44,6 @@ function App() {
   useEffect(() => {
     dispatch(getTitlesFromAPI());
   }, [dispatch]);
-
-  //TODO: DeleteBlog post can be done in POST move down dispatch in post component
 
   return (
     <div className="App">
