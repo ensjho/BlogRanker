@@ -24,13 +24,14 @@ function Home({ sortedPostIds, titles }) {
   ));
 
   return (
-    <div className="homeContainer">
-      <h4>
-        Welcome to <b>Blog Ranker</b>, our innovative site for communicating on
+    <div>
+      <div className="text-center">
+        <h5>Welcome to <b>Blog Ranker</b>, our innovative site for communicating on
         the information superhighway!
-      </h4>
-      <div className="postCardArea">
-        <div className="blogPostCard">{postComponent}</div>
+        </h5>
+      </div>
+      <div className="col-md-8 offset-md-2 mt-4">
+        {postComponent}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../CSS/Post.css"
 import { useParams, useHistory, Redirect } from "react-router-dom";
 import Comments from "./Comments";
 import {
@@ -12,7 +11,6 @@ import {
 import PostEditForm from "./PostEditForm";
 import PostDisplay from "./PostDisplay";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import Vote from "./Vote";
 
 /** Renders details about the post when onEditPage is set to False;
  *  Renders editing form for the post when onEditPage is set to True;
@@ -89,10 +87,9 @@ function Post() {
                 post={post}
                 handleDelete={handleDelete}
                 handleEditToggle={handleEditToggle}
+                postId={id}
+                votes={post.votes}
               />
-            </div>
-            <div className="postDisplay-Vote">
-              <Vote postId={id} votes={post.votes} />
             </div>
               <Comments
                 comments={post.comments}

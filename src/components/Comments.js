@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "../CSS/Comments.css"
-
 
 function Comments({ comments, addBlogComment, deleteBlogComment }) {
   const [commentData, setCommentData] = useState({ text: "" });
@@ -29,34 +27,37 @@ function Comments({ comments, addBlogComment, deleteBlogComment }) {
 
   if (comments) {
     commentsRendered = Object.keys(comments).map((id) => (
-      <div className="single-comment" key={id}>
-        <div className="comment-content">
+      <div className="mt-3 d-flex justify-content-left"key={id}>
+        <div className="col-11 border-bottom border-secondary mr-3">
         {comments[id].text}
         </div>
-        <button id={id} className="comment-remove-button" onClick={handleCommentRemove}>
+        <div className="col-3 p-0">
+        <button id={id} className="btn btn-danger" onClick={handleCommentRemove}>
           X
         </button>
+        </div>
       </div>
     ));
   }
 
 
   return (
-    <div className="comments-container">
-      <div>
-        <h1>Comments</h1>
-      </div>
-      <form onSubmit={handleCommentSubmit}>
-        <input
-          name="text"
-          onChange={handleChange}
-          value={commentData.text}
-          placeholder="New Commnet"
-        ></input>
-        <button className="addComment-Button">Add</button>
-      </form>
-      <div className="commentsRendered-container">
-        {commentsRendered}
+    <div className="col-md-8 offset-md-2 mt-4">
+      <h1>Comments</h1>
+      <div className="card">
+        <div className="card-body">
+          <form className="form-inline" onSubmit={handleCommentSubmit}>
+            <input
+              className="form-control form-control-lg flex-grow-1"
+              name="text"
+              onChange={handleChange}
+              value={commentData.text}
+              placeholder="New Commnet"
+            />
+            <button className="btn btn-primary btn-lg">Add</button>
+          </form>
+          {commentsRendered}
+        </div>
       </div>
     </div>
   );

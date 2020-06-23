@@ -1,0 +1,11 @@
+.postdisplay-vote {
+  font-size: calc(1vh + 1vw);
+}
+
+.postdisplay-vote button {
+  font-size:calc(0.8vh + 0.8vw); 
+}
+
+.postdisplay-title{
+  font-size: calc(3vh + 3vw);
+}

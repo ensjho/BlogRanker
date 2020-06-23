@@ -1,23 +1,28 @@
 import React from "react";
-import "../CSS/Header.css"
+import "./Header.css"
 import { NavLink } from "react-router-dom";
 
 function Header() {
   return (
-    <div>
-      <div className="headerContainer">
-        <h1>Blog Ranker</h1>
-        <h3>Ranking your favorite blog post!</h3>
-        <nav className="navLinkContainer">
-            <span>01.</span>
-            <NavLink className="HomeLink" exact to="/">
+    <div className="header jumbotron jumbotron-fluid bg-dark col-md-8 offset-md-2 mt-3">
+      <div className="container text-center text-white">
+        <div className="display-4">Blog Ranker</div>
+        <div className="lead">Ranking your favorite blog post!</div>
+        <nav className="Navigation navbar navbar-expand-lg">
+          <ul className="navbar-nav m-auto">
+            <li className="nav-item mr-4">
+              <NavLink className="nav-link" exact to="/">
                 Home
             </NavLink>
-            <span>02.</span>
-            <NavLink className="AddPostLink" exact to="/new">
-              Add a new post
+            </li>
+            <li className="nav-item mr-4">
+              <NavLink className="nav-link" exact to="/new">
+                Add a new post
             </NavLink>
-          </nav>
+            </li>
+          </ul>
+        </nav>
+
       </div>
     </div>
   )

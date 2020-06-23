@@ -11,7 +11,8 @@ import {
 
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+
 
 /**titles is an res.data (array) you get from the api  get request
 in the form of {id, title, description, votes}

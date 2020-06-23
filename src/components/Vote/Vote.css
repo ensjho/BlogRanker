@@ -1,0 +1,4 @@
+.vote-title {
+  font-size: calc(1vw + 1vh);
+  font-weight: bold;
+}

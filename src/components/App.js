@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import "../CSS/App.css";
 import Home from "./Home";
 import Header from "./Header";
 import AddPostForm from "./AddPostForm";
