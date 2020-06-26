@@ -1,6 +1,17 @@
 ## Blog Ranker
 Blog site that allows users to like, comment, and up vote posts.
-(React/ Redux / Express)
+
+## Technologies 
+- React.js
+- Redux.js
+- Express
+
+## Features
+- Like/unlike
+- add a new post
+- edit a post
+- comment
+- vote posts and rank them
 
 
 ## Available Scripts
